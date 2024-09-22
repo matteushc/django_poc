@@ -1,4 +1,13 @@
 # Byte-compiled / optimized / DLL files
+
+bin/
+lib/
+appclient/myapi/__pycache__/
+appclient/appclient/__pycache__/
+appclient/myapi/migrations/
+pyvenv.cfg
+.venv/
+
 __pycache__/
 *.py[cod]
 *$py.class
