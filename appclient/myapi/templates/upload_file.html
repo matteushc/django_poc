@@ -1,0 +1,27 @@
+{% extends "base.html" %}
+
+{% block title %}Upload File{% endblock %}
+
+{% block content %}
+
+{% if user.is_authenticated %}
+Hi {{ user.username }}!
+
+<div class="h-100 d-flex align-items-center justify-content-center">
+    <form method="post" enctype="multipart/form-data">
+        {% csrf_token %}
+        <label for="file" class="btn btn-primary btn-block btn-outlined">Select a file:</label>
+        <input type="file" id="file" name="file" style="display:none">
+
+        
+        <input type="submit" value="Upload">
+    </form>
+
+    {% else %}
+    <div>
+        <p>You are not logged in</p>
+        <button class="btn btn-outline-primary"><a href="{% url 'login' %}">Log In</a></button>
+        {% endif %}
+    </div>
+</div>
+{% endblock %}
