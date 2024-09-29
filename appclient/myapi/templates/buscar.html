@@ -1,63 +1,50 @@
-<!doctype html>
-<html>
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
-    <head>
-        <style>
-            .form-inline .form-group {
-                margin-right:4px;
-            }
-            label {
-                margin-right:4px;
-            }
-        </style>
-        <meta charset="utf-8">
-        <title>Posts</title>
-    </head>
+{% extends "base.html" %}
 
-    <body >
-        <div class="container">
-            <h2>Post and comments: </h2>
-            <div class="d-flex justify-content-center">
-                <form class="form-inline" action="/buscar_log/" method="GET">
-                    <div class="form-group mb-2">
-                        <label for="search_box"> Numero do post: </label>
-                        <input class="form-control" id="search_box" type="text" name="search_box" value=""> 
-                    </div>
-                    <div class="form-group mb-2">
-                        <label for="data_box"> Data: </label>
-                        <input class="form-control" id="data_box" type="text" name="data_box" value=""> 
-                    </div>
-                    <button class="btn btn-primary mb-2" type="submit" >OK</button>
-                </form>
+{% block title %}Upload File{% endblock %}
+
+{% block content %}
+<div class="container">
+    <h2>Post and comments: </h2>
+    <div class="d-flex justify-content-center">
+        <form class="form-inline" action="/buscar_log/" method="GET">
+            <div class="form-group mb-2">
+                <label for="search_box"> Numero do post: </label>
+                <input class="form-control" id="search_box" type="text" name="search_box" value=""> 
             </div>
-            <table class="table">
-                <thead class="thead-dark">
-                <tr>
-                    <th>Post id</th>
-                    <th>Name</th>
-                    <th>Email</th>
-                    <th>Body</th>
-                </tr>
-                </thead>
-                <tbody>
-                {% for log in logs_list %}
-                    <tr class="alert alert-danger" role="alert">
-                        <td>
-                            <b>{{log.postId}}</b>
-                        </td>
-                        <td>
-                            {{log.name}}
-                        </td>
-                        <td>
-                            {{log.email}}
-                        </td>
-                        <td>
-                            {{log.body}}
-                        </td>
-                    </tr>
-                {% endfor %}
-                </tbody>
-            </table>
-        </div>
-    </body>
-</html>
+            <div class="form-group mb-2">
+                <label for="data_box"> Data: </label>
+                <input class="form-control" id="data_box" type="text" name="data_box" value=""> 
+            </div>
+            <button class="btn btn-primary mb-2" type="submit" >OK</button>
+        </form>
+    </div>
+    <table class="table">
+        <thead class="thead-dark">
+        <tr>
+            <th>Post id</th>
+            <th>Name</th>
+            <th>Email</th>
+            <th>Body</th>
+        </tr>
+        </thead>
+        <tbody>
+        {% for log in comment_list %}
+            <tr class="alert alert-danger" role="alert">
+                <td>
+                    <b>{{log.postId}}</b>
+                </td>
+                <td>
+                    {{log.name}}
+                </td>
+                <td>
+                    {{log.email}}
+                </td>
+                <td>
+                    {{log.body}}
+                </td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+</div>
+{% endblock %}

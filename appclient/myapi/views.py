@@ -9,34 +9,43 @@ from django.contrib.auth.decorators import login_required
 from django.core.files.storage import FileSystemStorage
 from io import BytesIO
 from pypdf import PdfReader, PdfWriter
+from django.contrib.auth.views import LoginView
+from django.contrib.auth.forms import AuthenticationForm
+from django.utils.translation import gettext_lazy as _
 
 
 URL = "https://jsonplaceholder.typicode.com"
 
 
-class LogsViewSet(viewsets.ModelViewSet):
+class MyAuthForm(AuthenticationForm):
+    error_messages = {
+        'invalid_login': _(
+            "Por favor enter a correct %(username)s and password. Note that both "
+            "fields may be case-sensitive."
+        ),
+        'inactive': _("This account is inactive."),
+    }
+
+
+class LoginView(LoginView):
+    authentication_form = MyAuthForm
+
+
+class AppClientViewSet(viewsets.ModelViewSet):
     queryset = AppClient.objects.all().order_by('postId')
     serializer_class = AppClientSerializer
 
 
-class IndexView(generic.ListView):
-    model = AppClient
-    template_name = 'base.html'
-  
-    def get_queryset(self):
-        return AppClient.objects.all()
-
-
-class LogsView(generic.TemplateView):
+class AppClientView(generic.TemplateView):
 
     def get(self,request):
         data_atual = datetime.datetime.now()
         data_atual = data_atual.strftime("%Y-%m-%d")
         url = f'{URL}/comments'
         r = requests.get(url)
-        logs = r.json()
-        logs_list = {'logs_list': logs}
-        return render(request,'buscar.html',logs_list)
+        comments = r.json()
+        comments_list = {'comment_list': comments}
+        return render(request,'buscar.html',comments_list)
 
 
 @login_required(login_url='/')
@@ -49,9 +58,9 @@ def your_view(request):
         if search_box:
             url = f'{URL}/comments?postId={search_box}'
         r = requests.get(url)
-        logs = r.json()
-        logs_list = {'logs_list': logs}
-        return render(request,'buscar.html',logs_list)
+        comments = r.json()
+        comments_list = {'comment_list': comments}
+        return render(request,'buscar.html',comments_list)
     
 
 @login_required(login_url='/')

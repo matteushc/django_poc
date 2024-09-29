@@ -4,24 +4,26 @@
 
 {% block content %}
 
-{% if user.is_authenticated %}
-Hi {{ user.username }}!
 
-<div class="h-100 d-flex align-items-center justify-content-center">
-    <form method="post" enctype="multipart/form-data">
-        {% csrf_token %}
-        <label for="file" class="btn btn-primary btn-block btn-outlined">Select a file:</label>
-        <input type="file" id="file" name="file" style="display:none">
-
-        
-        <input type="submit" value="Upload">
-    </form>
-
-    {% else %}
-    <div>
-        <p>You are not logged in</p>
-        <button class="btn btn-outline-primary"><a href="{% url 'login' %}">Log In</a></button>
-        {% endif %}
+<div class="jumbotron">
+    <div class="container">
+    </div>
+</div>
+<div class="container">
+    <!-- Example row of columns -->
+    <div class="row">
+      
+        <form class="row g-3" method="post" enctype="multipart/form-data">
+            <div class="col-auto">
+                {% csrf_token %}
+                <label for="file" class="btn btn-primary btn-block btn-outlined">Selecionar arquivos</label>
+                <input type="file" id="file" name="file" style="display:none">
+            </div>
+            <div class="col-auto">
+                <input type="submit" value="Carregar">
+            </div>
+        </form>
+      
     </div>
 </div>
 {% endblock %}
